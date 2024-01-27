@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace eDostava.Model.SearchObjects
+{
+    public class OmiljeniSearchObject : BaseSearchObject
+    {
+        public string? NazivGT { get; set; }
+        public int? RestoranId { get; set; }
+        public int? KupacId { get; set; }
+
+
+    }
+}

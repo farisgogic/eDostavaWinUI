@@ -1,0 +1,37 @@
+version: '3'
+services:
+#mssql docker
+  dostava-sql:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    restart: unless-stopped
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Konjic1981
+      - MSSQL_PID=Developer
+    ports:
+      - 1401:1433
+    expose:
+      - 1433
+    networks:
+      - dostavanet2023
+
+  dostava-api:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - ConnectionStrings:DefaultConnection=Server=dostava-sql,1433;Database=Dostava;User=sa;Password=Konjic1981;ConnectRetryCount=0;TrustServerCertificate=True
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - 7037:7037
+    networks:
+      - dostavanet2023
+    links:
+      - dostava-sql
+    depends_on:
+      - dostava-sql
+      
+networks:
+  dostavanet2023:
+    driver: bridge   
